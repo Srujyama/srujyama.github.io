@@ -64,7 +64,6 @@ body {
   cursor: pointer;
 }
 
-
 .grid-item.highlight:hover {
   color: cyan;
   transform: scale(1.1);
@@ -144,5 +143,4 @@ body {
   margin: 16px auto 0;
   opacity: 0.5;
 }
-
 

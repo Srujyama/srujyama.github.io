@@ -6,7 +6,7 @@ import Resume from './Resume.jsx'
 import Projects from './Projects.jsx'
 import Contact from './contact.jsx'
 import About from './about.jsx'
-
+import FlyFlirt from './FlyFlirt.jsx'
 
 
 import './App.css'
@@ -20,6 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 <Route path="/projects" element={<Projects />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/flyflirt" element={<FlyFlirt />} />
 
             </Routes>
         </BrowserRouter>

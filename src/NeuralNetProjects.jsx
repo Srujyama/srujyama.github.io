@@ -10,10 +10,10 @@ export default function NeuralNetProjects() {
 
         const sketch = (s) => {
             const projects = [
-                { title: 'FlyFlirt', url: '/projects/FlyFlirt', description: 'OpenCV + behavioral genetics.' },
-                { title: 'CarpetCleanChangePoints', url: '/projects/CarpetCleanChangePoints', description: 'Recombination detection at scale.' },
-                { title: 'FlyVialTracker', url: '/projects/FlyVialTracker', description: 'Trackes the status of your Fly Vials.' },
-                { title: 'StockQuant', url: '/projects/StockQuant', description: 'Using math to choose stocks.' }
+                { title: 'FlyFlirt', url: 'FlyFlirt', description: 'OpenCV + behavioral genetics.' },
+                { title: 'CarpetCleanChangePoints', url: 'CarpetCleanChangePoints', description: 'Recombination detection at scale.' },
+                { title: 'FlyVialTracker', url: 'FlyVialTracker', description: 'Trackes the status of your Fly Vials.' },
+                { title: 'StockQuant', url: 'StockQuant', description: 'Using math to choose stocks.' }
             ]
             const neurons = []
             const connections = []
@@ -83,7 +83,6 @@ export default function NeuralNetProjects() {
 
             s.draw = () => {
                 s.clear()
-                s.background('#003262')
                 s.strokeWeight(1.5)
                 let hovering = false
                 t += 1
@@ -103,8 +102,17 @@ export default function NeuralNetProjects() {
                 // Draw all neurons
                 for (let layer of neurons) {
                     for (let node of layer) {
-                        s.fill(node.linkedProject ? [253, 181, 21] : [255, 80])
-                        s.ellipse(node.x, node.y, node.r * 2)
+                        if (node.linkedProject) {
+                            const [r, g, b, a] = getRainbowColor((node.y + t) / 30)
+                            s.fill(r, g, b, a)
+                            s.stroke(r, g, b, a + 50)
+                            s.strokeWeight(2)
+                            s.ellipse(node.x, node.y, node.r * 2.5)
+                        } else {
+                            s.noStroke()
+                            s.fill(255, 80)
+                            s.ellipse(node.x, node.y, node.r * 2)
+                        }
                     }
                 }
 

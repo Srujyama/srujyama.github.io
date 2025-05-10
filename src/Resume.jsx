@@ -6,7 +6,6 @@ import Header from './Header'
 import TimeLineComponent from './TimeLineComponent'
 import './Resume.css'
 
-
 export default function Resume() {
     const location = useLocation();
 

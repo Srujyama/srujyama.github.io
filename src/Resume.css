@@ -1,5 +1,4 @@
 .resume-container {
-    background-color: #003262; /* Berkeley Blue */
     color: white;
     min-height: 100vh;
     padding: 60px 20px;
@@ -162,13 +161,14 @@ body, .resume-container {
     align-items: center;
     justify-content: space-between;
     padding: 0 60px;    /* spacing INSIDE the max width */
-    background-color: #003262;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
     height: 85px;
+    background-color: #0f172a; /* Dark background */ /* 003262 for Berkeley Blue */
+    background-size: 40px 40px;
 }
 
 .nav-left, .nav-right {

@@ -21,7 +21,7 @@ export default function Projects() {
                 <h1 className="neural-title text-fade-in">Projects</h1>
                 </motion.h1>
                 <p className="neural-sub text-fade-in delay-1">
-                Computional Biology and Economics Projects
+                Click on hightlighted nodes to see the project details
                 </p>
                 <NeuralNetProjects/>
             </section>

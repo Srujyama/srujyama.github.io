@@ -68,7 +68,7 @@ function App() {
     return (
         <div className="matrix-container">
             <h1 className="matrix-title text-fade-in">Srujan Yamali</h1>
-            <p className="matrix-sub text-fade-in delay-1">CS + Econ @ UC Berkeley</p>
+            <p className="matrix-sub text-fade-in delay-1">CS + Bio @ UC Berkeley</p>
 
 
             <div className="social-icons">

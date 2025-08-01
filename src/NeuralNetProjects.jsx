@@ -1,20 +1,24 @@
-// NeuralNetProjects.jsx
+import { useNavigate } from 'react-router-dom'
 import { useEffect, useRef } from 'react'
 
 export default function NeuralNetProjects() {
     const canvasRef = useRef()
     const seed = 40
+    const navigate = useNavigate()
 
     useEffect(() => {
         let p5Instance
-
         const sketch = (s) => {
-            const projects = [
-                { title: 'FlyFlirt', url: 'FlyFlirt', description: 'OpenCV + behavioral genetics.' },
-                { title: 'CarpetCleanChangePoints', url: 'CarpetCleanChangePoints', description: 'Recombination detection at scale.' },
-                { title: 'FlyVialTracker', url: 'FlyVialTracker', description: 'Trackes the status of your Fly Vials.' },
-                { title: 'StockQuant', url: 'StockQuant', description: 'Using math to choose stocks.' }
-            ]
+            const localNavigate = navigate;
+
+        const projects = [
+            { title: 'FlyFlirt', url: '/flyflirt', description: 'OpenCV + behavioral genetics.' },
+            { title: 'CarpetCleanChangePoints', url: '/carpetcleanchangepoints', description: 'Recombination detection at scale.' },
+            { title: 'FlyVialTracker', url: '/flyvialtracker', description: 'Trackes the status of your Fly Vials.' },
+            { title: 'StockQuant', url: '/stockquant', description: 'Using math to choose stocks.' }
+        ]
+
+
             const neurons = []
             const connections = []
             const layers = [7, 9, 7]
@@ -40,7 +44,7 @@ export default function NeuralNetProjects() {
             }
 
             s.setup = () => {
-                s.createCanvas(window.innerWidth, window.innerHeight).parent(canvasRef.current)
+                s.createCanvas(s.windowWidth, s.windowHeight).parent(canvasRef.current)
                 s.noStroke()
                 s.textFont('Courier New')
 
@@ -136,19 +140,20 @@ export default function NeuralNetProjects() {
                             if (tooltipY < 0) tooltipY = 5
                             if (tooltipY + boxHeight > s.height) tooltipY = s.height - boxHeight - 5
 
-                            // Frosted glass effect background
+                            const [r, g, b, a] = getRainbowColor((node.y + t) / 30)
+
                             s.fill(20, 20, 20, 220)
-                            s.stroke(253, 181, 21, 140) // gold border
+                            s.stroke(r, g, b, 180)
                             s.strokeWeight(1.5)
                             s.rect(tooltipX, tooltipY, boxWidth, boxHeight, 12)
 
-                            // Soft shadow glow
                             s.noFill()
-                            s.stroke(253, 181, 21, 40)
                             for (let i = 1; i <= 4; i++) {
+                                s.stroke(r, g, b, 40 / i)
                                 s.strokeWeight(i)
                                 s.rect(tooltipX - i, tooltipY - i, boxWidth + i * 2, boxHeight + i * 2, 12)
                             }
+
 
                             // Tooltip text
                             s.noStroke()
@@ -172,14 +177,14 @@ export default function NeuralNetProjects() {
                 for (let layer of neurons) {
                     for (let node of layer) {
                         if (node.active && node.linkedProject) {
-                            window.location.href = node.linkedProject.url
+                            localNavigate(node.linkedProject.url)
                         }
                     }
                 }
             }
 
             s.windowResized = () => {
-                s.resizeCanvas(window.innerWidth, window.innerHeight)
+                s.resizeCanvas(s.windowWidth, s.windowHeight)
             }
         }
 
@@ -190,5 +195,14 @@ export default function NeuralNetProjects() {
         }
     }, [])
 
-    return <div ref={canvasRef} style={{ width: '100%', height: '100vh' }} />
+    return (
+        <div
+            ref={canvasRef}
+            style={{
+                width: '100vw',
+                height: '100vh',
+                overflow: 'hidden',
+            }}
+        />
+    )
 }

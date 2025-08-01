@@ -239,6 +239,39 @@ html {
     border-bottom: 2px solid #FDB515;
 }
 
+.about-container {
+    color: white;
+    min-height: 100vh;
+    padding: 60px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
+.about-title {
+    font-size: 96px;
+    font-weight: 800;
+    color: white;
+    margin-top: 100px; /* push it lower to give breathing space from nav */
+    margin-bottom: 48px;
+    text-align: center;
+    letter-spacing: 1.5px;
+}
 
+.about-title::after {
+    content: '';
+    display: block;
+    height: 5px;
+    width: 140px;
+    margin: 16px auto 0;
+    border-radius: 999px;
+    background: linear-gradient(270deg, #FDB515, #ff2edf, #6abfff, #FDB515);
+    background-size: 600% 600%;
+    animation: glowBar 6s ease infinite;
+}
 
+@keyframes glowBar {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}

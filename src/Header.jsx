@@ -19,14 +19,24 @@ const socialLinks = [
     }
 ];
 
-
 export default function Header() {
     const location = useLocation();
     const currentPath = location.pathname;
-    const [showDropdown, setShowDropdown] = useState(false);
     const projectPaths = ['/projects', '/flyflirt', '/projects/genomics', '/projects/llm'];
     const isProjectActive = projectPaths.includes(currentPath);
 
+    const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+    const [isDropdownActive, setIsDropdownActive] = useState(false);
+
+    const toggleDropdown = () => {
+        if (isDropdownVisible) {
+            setIsDropdownActive(false);
+            setTimeout(() => setIsDropdownVisible(false), 300); // matches CSS transition
+        } else {
+            setIsDropdownVisible(true);
+            setTimeout(() => setIsDropdownActive(true), 0); // allow DOM to mount first
+        }
+    };
 
     return (
         <div className="nav-bar">
@@ -37,19 +47,19 @@ export default function Header() {
                 {/* Projects dropdown */}
                 <div className="nav-link dropdown">
                     <button
-                        onClick={() => setShowDropdown(prev => !prev)}
+                        onClick={toggleDropdown}
                         className={`dropdown-btn ${isProjectActive ? 'active' : ''}`}
                     >
                         Projects ▾
                     </button>
 
-                    {showDropdown && (
-                        <div className="dropdown-menu">
+                    {isDropdownVisible && (
+                        <div className={`dropdown-menu ${isDropdownActive ? 'show' : ''}`}>
                             <Link to="/projects" className={`dropdown-item ${currentPath === '/projects' ? 'active' : ''}`}>All Projects</Link>
                             <Link to="/flyflirt" className={`dropdown-item ${currentPath === '/flyflirt' ? 'active' : ''}`}>Fly Flirt</Link>
+                            <Link to="/CarpetCleanChangePoints" className={`dropdown-item ${currentPath === '/CarpetCleanChangePoints' ? 'active' : ''}`}>Carpet Clean Change Points</Link>
                             <Link to="/FlyVialTracker" className={`dropdown-item ${currentPath === '/FlyVialTracker' ? 'active' : ''}`}>Fly Vial Tracker</Link>
                             <Link to="/StockQuant" className={`dropdown-item ${currentPath === '/StockQuant' ? 'active' : ''}`}>Stock Quant</Link>
-                            <Link to="/CarpetCleanChangePoints" className={`dropdown-item ${currentPath === '/CarpetCleanChangePoints' ? 'active' : ''}`}>Carpet Clean Change Points</Link>
                         </div>
                     )}
                 </div>
@@ -58,14 +68,10 @@ export default function Header() {
                 <Link to="/contact" className={`nav-link ${currentPath === '/contact' ? 'active' : ''}`}>Contact</Link>
             </div>
 
-            <div className="nav-center">
-                <Link to="/" className="sy-logo">SY</Link>
-            </div>
-
             <div className="nav-right">
                 {socialLinks.map((link, index) => (
                     <a key={index} href={link.href} target="_blank" rel="noopener noreferrer">
-                        <img src={link.img} alt={link.alt} className="nav-icon"/>
+                        <img src={link.img} alt={link.alt} className="nav-icon" />
                     </a>
                 ))}
             </div>

@@ -27,6 +27,7 @@
     align-items: flex-start;
     margin-bottom: 40px;
     position: relative;
+    will-change: transform, opacity;
 }
 
 .timeline-icon {
@@ -101,4 +102,40 @@
     background: rgba(30, 30, 30, 0.65);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.timeline-toggle-button {
+    margin-top: 0.75rem;
+    padding: 0.5rem 1.2rem;
+    background: linear-gradient(135deg, #6dd5ed, #2193b0);
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 8px rgba(33, 147, 176, 0.3);
+    transition: all 0.3s ease;
+}
+
+.timeline-toggle-button:hover {
+    background: linear-gradient(135deg, #2193b0, #6dd5ed);
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(33, 147, 176, 0.4);
+}
+
+.timeline-toggle-button:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 4px rgba(33, 147, 176, 0.2);
+}
+
+.timeline-toggle-button .chevron-icon {
+    transition: transform 0.3s ease;
+}
+
+.timeline-toggle-button.open .chevron-icon {
+    transform: rotate(180deg);
 }

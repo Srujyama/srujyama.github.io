@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Header from './Header'
 import './About.css'
-import './Resume.css'
 import { motion } from 'framer-motion'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
@@ -59,11 +58,11 @@ export default function About() {
 
 
     return (
-        <div className="resume-container">
+        <div className="about-container">
             <Header/>
 
             <motion.h1
-                className="resume-title about-main-title"
+                className="about-title about-main-title"
                 initial={{y: -20, opacity: 0}}
                 animate={{y: 0, opacity: 1}}
                 transition={{duration: 0.6, delay: 0.2}}

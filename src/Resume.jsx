@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaEye, FaDownload } from 'react-icons/fa'
 import { motion } from 'framer-motion'
 import { useLocation } from 'react-router-dom'
@@ -6,20 +6,68 @@ import Header from './Header'
 import TimeLineComponent from './TimeLineComponent'
 import './Resume.css'
 
+const sections = ['Education', 'Work', 'Publications', 'Awards']
+
 export default function Resume() {
-    const location = useLocation();
+    const location = useLocation()
+    const [activeSection, setActiveSection] = useState('Education')
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollMid = window.innerHeight / 2
+            let current = sections[0]
+            let smallestDiff = Infinity
+
+            for (const id of sections) {
+                const el = document.getElementById(id)
+                if (el) {
+                    const rect = el.getBoundingClientRect()
+                    const diff = Math.abs(rect.top + rect.height / 2 - scrollMid)
+                    if (diff < smallestDiff) {
+                        smallestDiff = diff
+                        current = id
+                    }
+                }
+            }
+
+            setActiveSection(current)
+        }
+
+        window.addEventListener('scroll', handleScroll)
+        handleScroll()
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [])
 
     return (
         <motion.div
             className="resume-container"
-
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
         >
-
             <Header />
 
+            {/* Scroll Nav */}
+            <nav className="resume-nav-vertical">
+                <div className="nav-line" />
+                {sections.map(section => (
+                    <a
+                        key={section}
+                        href={`#${section}`}
+                        className={activeSection === section ? 'active' : ''}
+                        onClick={(e) => {
+                            e.preventDefault()
+                            const el = document.getElementById(section)
+                            if (el) {
+                                const yOffset = el.getBoundingClientRect().top + window.scrollY
+                                window.scrollTo({ top: yOffset, behavior: 'smooth' })
+                            }
+                        }}
+                    >
+                        {section}
+                    </a>
+                ))}
+            </nav>
 
             {/* Resume Title */}
             <motion.h1
@@ -62,7 +110,7 @@ export default function Resume() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
             >
-                <TimeLineComponent/>
+                <TimeLineComponent />
             </motion.div>
         </motion.div>
     )

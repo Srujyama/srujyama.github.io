@@ -5,79 +5,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.sy-logo {
-    font-size: 36px;
-    font-weight: 900;
-    color: #FDB515;
-    letter-spacing: 4px;
-    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    text-decoration: none;
     position: relative;
-    z-index: 1;
-    cursor: pointer;
-    background-color: transparent;
-    border: 3px solid #FDB515;
-    transition: box-shadow 0.3s ease, border-color 0.3s ease;
-    background-clip: padding-box; /* Helps with edge definition */
-}
-
-.sy-logo::before {
-    content: '';
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    right: -10px;
-    bottom: -10px;
-    border-radius: 50%;
-    background: conic-gradient(
-            from 0deg,
-            red,
-            orange,
-            yellow,
-            green,
-            blue,
-            indigo,
-            violet,
-            red
-    );
-    filter: blur(20px); /* Outer glow only */
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: -1;
-    animation: rainbowGlow 5s linear infinite;
-    pointer-events: none;
-}
-
-.sy-logo:hover::before,
-.sy-logo:focus::before,
-.sy-logo:active::before {
-    opacity: 1;
-}
-
-@keyframes rainbowGlow {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-.sy-logo a {
-    text-decoration: none;
-    color: #FDB515;
-}
-
-.sy-logo:hover {
-    transform: scale(1.1);
 }
 
 .resume-buttons {
@@ -90,12 +18,11 @@
 
 .resume-button {
     display: flex;
-    align-items: center;        /* Vertical center */
-    justify-content: center;    /* Horizontal center */
-    text-align: center;         /* Center multi-line text */
-    white-space: normal;        /* Allow wrapping */
-    min-height: 52px;           /* Or whatever height fits best */
-
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    white-space: normal;
+    min-height: 52px;
     padding: 12px 24px;
     border: none;
     border-radius: 16px;
@@ -107,7 +34,6 @@
     text-decoration: none;
     flex: 1;
 }
-
 
 .resume-button.view {
     background-color: #ffffff;
@@ -127,48 +53,109 @@
 .timeline-wrapper {
     width: 100%;
     max-width: 800px;
-    margin: 80px auto 0; /* Pushes timeline down from resume buttons */
+    margin: 80px auto 0;
 }
 
-
-.timeline-section-title {
-    font-size: 68px;
-    font-weight: bold;
-    color: whitesmoke; /* Title is Berkeley Blue */
-    margin: 60px 0 30px;
-    text-align: center;
-}
-
+/* === Resume Title === */
 .resume-title {
     font-size: 96px;
     font-weight: 800;
     color: white;
-    margin-top: 100px; /* push it lower to give breathing space from nav */
+    margin-top: 100px;
     margin-bottom: 48px;
     text-align: center;
     letter-spacing: 1.5px;
+    position: relative;
 }
 
+.resume-title::after {
+    content: '';
+    display: block;
+    height: 5px;
+    width: 140px;
+    margin: 16px auto 0;
+    border-radius: 999px;
+    background: linear-gradient(270deg, #FDB515, #ff2edf, #6abfff, #FDB515);
+    background-size: 600% 600%;
+    animation: glowBar 6s ease infinite;
+}
+
+@keyframes glowBar {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* === Vertical Scroll Nav === */
+.resume-nav-vertical {
+    position: fixed;
+    left: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    z-index: 1000;
+    font-family: 'Poppins', sans-serif;
+}
+
+.resume-nav-vertical .nav-line {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.resume-nav-vertical a {
+    position: relative;
+    color: #b8b2ad;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    padding-left: 16px;
+    transition: all 0.3s ease;
+}
+
+.resume-nav-vertical a.active {
+    color: #FDB515;
+    font-weight: 600;
+}
+
+.resume-nav-vertical a.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 20px;
+    background-color: #FDB515;
+    border-radius: 2px;
+}
+
+
+/* === Header/Nav (shared) === */
 body, .resume-container {
     font-family: 'Poppins', sans-serif;
 }
 
 .nav-bar {
     width: 100%;
-    max-width: 1400px; /* control max width of nav content */
-    margin: 0 auto;     /* center the nav bar content */
+    max-width: 1400px;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 60px;    /* spacing INSIDE the max width */
+    padding: 0 60px;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
     height: 85px;
-    background-color: #0f172a; /* Dark background */ /* 003262 for Berkeley Blue */
-    background-size: 40px 40px;
+    background-color: #0f172a;
 }
 
 .nav-left, .nav-right {
@@ -232,21 +219,31 @@ body, .resume-container {
     transform: scale(1.1);
 }
 
-.resume-title::after {
-    content: '';
-    display: block;
-    height: 5px;
-    width: 140px;
-    margin: 16px auto 0;
-    border-radius: 999px;
-    background: linear-gradient(270deg, #FDB515, #ff2edf, #6abfff, #FDB515);
-    background-size: 600% 600%;
-    animation: glowBar 6s ease infinite;
+/* === Dropdown (shared) === */
+.dropdown {
+    position: relative;
 }
 
-@keyframes glowBar {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+.dropdown-menu {
+    background-color: #1e293b !important;
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1001;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
+.dropdown-menu.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}

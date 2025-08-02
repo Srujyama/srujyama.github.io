@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { HashRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import App from './App.jsx'
 import Resume from './Resume.jsx'
@@ -13,7 +13,7 @@ import './App.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
-        <HashRouter>
+        <BrowserRouter>
             <Routes>
                 <Route path="/" element={<App />} />
                 <Route path="/resume" element={<Resume />} />
@@ -22,6 +22,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 <Route path="/about" element={<About />} />
                 <Route path="/flyflirt" element={<FlyFlirt />} />
             </Routes>
-        </HashRouter>
+        </BrowserRouter>
     </React.StrictMode>
 )

@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { HashRouter, Routes, Route } from 'react-router-dom'
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import App from './App.jsx'
 import Resume from './Resume.jsx'

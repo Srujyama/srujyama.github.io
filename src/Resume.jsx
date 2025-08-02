@@ -59,7 +59,7 @@ export default function Resume() {
                             e.preventDefault()
                             const el = document.getElementById(section)
                             if (el) {
-                                const yOffset = el.getBoundingClientRect().top + window.scrollY
+                                const yOffset = el.getBoundingClientRect().top + window.scrollY - 85 // 85px for fixed header height
                                 window.scrollTo({ top: yOffset, behavior: 'smooth' })
                             }
                         }}

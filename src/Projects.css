@@ -1,4 +1,17 @@
-/* ProjectShowcase.css */
+/* Hide both scrollbars but keep scrolling — apply to all likely scrollers */
+html, body {
+    overflow: auto;              /* keep scroll behavior */
+    -ms-overflow-style: none;    /* old IE/Edge */
+    scrollbar-width: none;       /* Firefox */
+}
+
+/* Chrome / Safari / new Edge */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;
+}
+
+
 .project-showcase {
     margin-top: 120px;
     text-align: center;

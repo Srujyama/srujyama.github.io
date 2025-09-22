@@ -1,0 +1,511 @@
+/* ========================================================================== */
+/* 1) THEME TOKENS                                                            */
+/* ========================================================================== */
+:root{
+  /* Colors */
+  --bg: #0f172a;
+  --fg: #ffffff;
+  --muted: #b8b2ad;
+  --tile: rgba(255,255,255,0.05);
+  --tileHi: rgba(255,255,255,0.10);
+  --tileHiHover: rgba(0,255,255,0.10);
+  --accent: cyan;
+  --border: rgba(255,255,255,0.06);
+
+  /* Spacing / Sizing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --container-max: 1000px;
+
+  /* Radius / Shadows */
+  --radius-6: 6px;
+  --radius-8: 8px;
+  --radius-10: 10px;
+  --shadow-1: 0 8px 24px rgba(0,0,0,0.25);
+
+  /* Animation / Transitions */
+  --dur-1: 0.18s;
+  --dur-2: 0.22s;
+  --dur-3: 0.3s;
+  --ease: ease;
+}
+
+/* ========================================================================== */
+/* 2) BASE / RESET                                                            */
+/* ========================================================================== */
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  color: var(--fg);
+  background-color: var(--bg);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  background-image:
+          linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Unified focus style */
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+  border-radius: var(--radius-8);
+}
+
+/* ========================================================================== */
+/* 3) LAYOUT                                                                  */
+/* ========================================================================== */
+
+/* Hero: forces Resume below the fold on load */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+/* Generic section wrapper */
+.section {
+  width: min(var(--container-max), 92vw);
+  margin: 80px auto;
+  scroll-margin-top: 80px;
+}
+
+.section-title {
+  font-size: 1.6rem;
+  margin: 0 0 1rem 0;
+}
+
+/* Matrix container / header text */
+.matrix-container { text-align: center; padding: 2rem; }
+.matrix-title { font-size: 2.5rem; margin-bottom: 0.5rem; }
+.matrix-sub { font-size: 1rem; color: var(--muted); margin-bottom: 2rem; }
+
+/* Matrix grid: 12 → 8 → 6 → 4 columns */
+.matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 10px;
+  max-width: var(--container-max);
+  margin: auto;
+}
+
+/* ========================================================================== */
+/* 4) MATRIX TILES                                                            */
+/* ========================================================================== */
+.grid-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-width: 0;
+  height: 40px;
+  padding: 0.5rem;
+
+  text-align: center;
+  text-decoration: none;
+
+  font-size: 0.8rem;
+  color: var(--muted);
+  background: var(--tile);
+  border-radius: var(--radius-6);
+
+  transition:
+          transform var(--dur-3) var(--ease),
+          background-color var(--dur-3) var(--ease),
+          color var(--dur-3) var(--ease),
+          box-shadow var(--dur-1) var(--ease);
+}
+
+.grid-item.highlight {
+  color: var(--fg);
+  background-color: var(--tileHi);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.grid-item.highlight:hover {
+  color: var(--accent);
+  transform: scale(1.08);
+  background-color: var(--tileHiHover);
+}
+
+/* ========================================================================== */
+/* 5) SOCIAL ICONS                                                            */
+/* ========================================================================== */
+.social-icons {
+  position: fixed;
+  left: 60px;
+  bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 10;
+  animation: fadeUp 1s var(--ease);
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  filter: brightness(0) invert(1);
+  transition: transform var(--dur-3) var(--ease);
+}
+
+.icon:hover { transform: scale(1.2); }
+
+.social-icons::after {
+  content: "";
+  display: block;
+  width: 2px;
+  height: 100px;
+  background-color: var(--fg);
+  margin: 16px auto 0;
+  opacity: 0.5;
+}
+
+/* ========================================================================== */
+/* 6) INFO BUTTON + PANEL                                                     */
+/* ========================================================================== */
+.info-button{
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 100;
+
+  padding: .65rem 1rem;
+  border: none;
+  border-radius: var(--radius-10);
+
+  color: var(--fg);
+  background: rgba(255,255,255,0.10);
+  font-weight: 600;
+  cursor: pointer;
+
+  transition:
+          transform var(--dur-1) var(--ease),
+          background-color var(--dur-3) var(--ease),
+          color var(--dur-3) var(--ease),
+          box-shadow var(--dur-1) var(--ease);
+}
+
+.info-button:hover{
+  transform: translateY(-1px);
+  background: var(--tileHiHover);
+  color: var(--accent);
+}
+
+/* Fade-in on page load */
+.info-button.fade-in {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeButtonIn 0.8s var(--ease) forwards;
+  animation-delay: 1.2s;
+}
+
+.info-panel{
+  position: fixed;
+  right: 24px;
+  bottom: calc(24px + 44px + 10px);
+  z-index: 100;
+
+  width: min(320px, 90vw);
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transform: translateY(8px);
+
+  padding: 1rem 1.25rem;
+  text-align: left;
+  font-size: .95rem;
+  line-height: 1.6;
+  color: var(--muted);
+
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-10);
+
+  transition:
+          max-height 280ms var(--ease),
+          opacity var(--dur-2) var(--ease),
+          transform var(--dur-2) var(--ease);
+}
+
+.info-button[aria-expanded="true"] + .info-panel{
+  max-height: 60vh;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* ========================================================================== */
+/* 7) RESUME HEADER + TIMELINE                                                */
+/* ========================================================================== */
+.resume-header { margin-bottom: 20px; }
+
+.resume-title {
+  margin: 0 0 .35rem 0;
+  font-size: 2.2rem;
+  letter-spacing: 0.3px;
+  line-height: 1.1;
+  background: linear-gradient(90deg, var(--fg), rgba(0,255,255,0.9));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 18px rgba(0,255,255,0.08);
+}
+
+.resume-sub {
+  margin: 0 0 14px 0;
+  font-size: 1rem;
+  color: var(--muted);
+}
+
+.resume-divider {
+  width: 100%;
+  height: 3px;
+  opacity: 0.85;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), rgba(255,255,255,0));
+  box-shadow: 0 0 22px rgba(0,255,255,0.15);
+}
+
+/* Match the external timeline library to theme */
+.vertical-timeline::before {
+  box-shadow: 0 0 20px rgba(0,255,255,0.15);
+}
+
+.vt-icon-inner {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: 18px;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.35));
+}
+
+.vt-toprow{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:8px;
+}
+
+.vt-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:.75rem;
+  font-weight:700;
+  padding:4px 10px;
+  border:1px solid;
+  border-radius:999px;
+  background: rgba(255,255,255,0.04);
+}
+
+.vt-date{
+  font-size:.8rem;
+  color: var(--muted);
+  opacity:.85;
+}
+
+.vt-title {
+  margin: 0 0 .4rem 0;
+  font-size: 1.15rem;
+  color: var(--fg);
+  letter-spacing:.2px;
+}
+
+.vt-orgline { margin: 0 0 .8rem 0; }
+
+.vt-org{
+  display:inline-block;
+  font-size: .88rem;
+  color: var(--fg);
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  backdrop-filter: blur(4px);
+}
+
+.vt-list  {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--muted);
+}
+.vt-list li {
+  margin: .35rem 0;
+  line-height: 1.5;
+}
+
+/* Icon image styling */
+.vt-logo{
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.35));
+}
+
+/* Fallback initials if a logo isn't mapped */
+.vt-initials{
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.18);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: .5px;
+}
+
+.vertical-timeline-element-content {
+  transition: transform var(--dur-3) var(--ease), box-shadow var(--dur-3) var(--ease), border-color var(--dur-3) var(--ease);
+}
+.vertical-timeline-element-content:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(0,0,0,0.45);
+  border-color: rgba(0,255,255,0.28) !important;
+}
+
+.vertical-timeline-element-content .vertical-timeline-element-content-arrow {
+  filter: brightness(1.2);
+}
+
+/* ========================================================================== */
+/* 8) ANIMATIONS                                                              */
+/* ========================================================================== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  opacity: 0;
+  transform: scale(0.8);
+  animation: fadeInZoom 0.6s var(--ease) forwards;
+}
+
+@keyframes fadeInZoom {
+  to { opacity: 1; transform: scale(1); }
+}
+
+.text-fade-in {
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: fadeSlideIn 1s var(--ease) forwards;
+}
+
+.delay-1 { animation-delay: 0.8s; }
+
+@keyframes fadeSlideIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeButtonIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================================================== */
+/* 9) RESPONSIVE BREAKPOINTS                                                  */
+/* ========================================================================== */
+@media (max-width: 1024px){
+  .matrix-grid { grid-template-columns: repeat(8, 1fr); }
+}
+
+@media (max-width: 768px){
+  .matrix-grid { grid-template-columns: repeat(6, 1fr); }
+  .vt-title { font-size: 1.05rem; }
+  .vt-org   { font-size: .85rem; }
+  .vt-date  { font-size: .75rem; }
+}
+
+@media (max-width: 520px){
+  .matrix-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (max-width: 480px){
+  .social-icons { left: 16px; bottom: 40px; }
+  .info-button  { right: 16px; bottom: 16px; }
+  .info-panel   { right: 16px; bottom: calc(16px + 44px + 10px); width: min(340px, 92vw); }
+}
+
+/* ========================================================================== */
+/* 10) REDUCED MOTION                                                         */
+/* ========================================================================== */
+@media (prefers-reduced-motion: reduce){
+  * { animation: none !important; transition: none !important; }
+}
+
+/* === Resume actions (clean, minimal, side-by-side) === */
+.resume-actions {
+  display: flex;
+  gap: 16px;
+  margin: 24px 0 40px;
+  flex-wrap: wrap;            /* allows graceful wrapping */
+}
+
+/* Minimal white buttons */
+.resume-btn {
+  flex: 1;                    /* share width evenly */
+  min-width: 200px;           /* prevents squishing on mid widths */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 0.8rem 1.2rem;
+  border-radius: var(--radius-8);
+
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #e5e7eb;
+
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+
+  transition: background 0.2s var(--ease),
+  border-color 0.2s var(--ease),
+  transform 0.15s var(--ease);
+}
+
+.resume-btn:hover {
+  background: #f8fafc;
+  border-color: #d1d5db;
+  transform: translateY(-1px);
+}
+
+.resume-btn:active {
+  transform: translateY(0);
+}
+
+.resume-icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Stack on small screens */
+@media (max-width: 640px){
+  .resume-actions { flex-direction: column; }
+}
+
+

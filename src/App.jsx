@@ -3,6 +3,7 @@ import 'react-vertical-timeline-component/style.min.css'
 import { useEffect, useMemo, useState } from 'react'
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component'
 import { FileText, Download, Github, ExternalLink, Rocket } from "lucide-react"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 /* ────────────────────────────────────────────────────────────────────────── */
 /* Minimal UI components (no libs)                                           */

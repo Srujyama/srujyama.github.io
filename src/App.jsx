@@ -249,6 +249,18 @@ const timelineData = [
         ],
         type: 'education',
     },
+    {
+        title: 'Software Engineer Intern',
+        org: 'Mercor',
+        location: 'Remote',
+        date: 'Aug 2025 - Present',
+        bullets: [
+            'Protein purification/crystallization; SDS-PAGE & Western blot validation.',
+            'Cell cultures using inverse PCR for point mutation in E. coli.',
+            'Assisted X-ray crystallography data collection/analysis.',
+        ],
+        type: 'work',
+    },
 ]
 
 /* ────────────────────────────────────────────────────────────────────────── */
@@ -308,6 +320,7 @@ function ResumeTimeline() {
         if (org.includes('princeton')) return '/Princeton_seal.png'
         if (org.includes('berkeley')) return '/Seal_of_University_of_California_Berkeley.png'
         if (org.includes('delaware')) return '/ud-seal-ocm.png'
+        if (org.includes('mercor')) return '/Mercor_Logo.png'
         return null
     }
 
@@ -338,7 +351,6 @@ function ResumeTimeline() {
                 return (
                     <VerticalTimelineElement
                         key={i}
-                        date={item.date}
                         icon={
                             <div className="vt-icon-inner" aria-hidden="true">
                                 {logo ? (

@@ -74,6 +74,7 @@ body {
 
 /* Hero: forces Resume below the fold on load */
 .hero {
+  position: relative; /* makes hero the containing block for absolute children */
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -182,9 +183,15 @@ body {
 /* ========================================================================== */
 /* 6) INFO BUTTON + PANEL                                                     */
 /* ========================================================================== */
-.info-button{
-  position: fixed;
-  right: 24px;
+.hero {
+  position: relative;
+  min-height: 100vh;
+  overflow: visible; /* Allow children to overflow outside */
+}
+
+.info-button {
+  position: absolute;  /* Changed from fixed to absolute */
+  right: -308px;
   bottom: 24px;
   z-index: 100;
 
@@ -204,7 +211,7 @@ body {
           box-shadow var(--dur-1) var(--ease);
 }
 
-.info-button:hover{
+.info-button:hover {
   transform: translateY(-1px);
   background: var(--tileHiHover);
   color: var(--accent);
@@ -218,9 +225,9 @@ body {
   animation-delay: 1.2s;
 }
 
-.info-panel{
-  position: fixed;
-  right: 24px;
+.info-panel {
+  position: absolute; /* Changed from fixed to absolute */
+  right: -308px;
   bottom: calc(24px + 44px + 10px);
   z-index: 100;
 
@@ -247,7 +254,7 @@ body {
           transform var(--dur-2) var(--ease);
 }
 
-.info-button[aria-expanded="true"] + .info-panel{
+.info-button[aria-expanded="true"] + .info-panel {
   max-height: 60vh;
   opacity: 1;
   transform: translateY(0);

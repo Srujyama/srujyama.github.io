@@ -255,9 +255,10 @@ const timelineData = [
         location: 'Remote',
         date: 'Aug 2025 - Present',
         bullets: [
-            'Protein purification/crystallization; SDS-PAGE & Western blot validation.',
-            'Cell cultures using inverse PCR for point mutation in E. coli.',
-            'Assisted X-ray crystallography data collection/analysis.',
+            'Designed and implemented internal developer tooling to accelerate AI/ML workflow automation.',
+            'Automated end-to-end AI pipelines for data ingestion, model training, and deployment using Prefect, MLflow, and\n' +
+            'Kubernetes, reducing experiment-to-production cycle time by 40%.',
+            'Developed monitoring dashboards with Prometheus/Grafana, supporting proactive detection of model drift.',
         ],
         type: 'work',
     },

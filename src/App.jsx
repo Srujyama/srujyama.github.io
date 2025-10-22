@@ -81,7 +81,7 @@ const projectsData = [
             "End-to-end tool with OpenCV + PyQt6 for tracking mating / thigmotaxis behavior. Processed a 730 GB dataset; >90% manual time saved.",
         stack: ["Python", "OpenCV", "PyQt6", "NumPy", "Pandas"],
         links: [
-            { label: "GitHub", href: "https://github.com/Srujyama/Drosophila-Desire-Detector", icon: <Github size={16} /> },
+            { label: "GitHub", href: "https://github.com/Srujyama/FlyFlirt", icon: <Github size={16} /> },
             { label: "Abstract", href: "https://www.ibangs.org/assets/documents/IBANGS%20Annual%20Meeting%202024_%20Genes%2C%20Brain%20and%20Behavior.pdf", icon: <ExternalLink size={16} /> },
         ],
         next: [
@@ -753,7 +753,7 @@ export default function App() {
             <section className="hero">
                 <div className="matrix-container">
                     <h1 className="matrix-title text-fade-in">Srujan Yamali</h1>
-                    <p className="matrix-sub text-fade-in delay-1">CS + Bio @ UC Berkeley</p>
+                    <p className="matrix-sub text-fade-in delay-1">CS + Neuro @ UC Berkeley</p>
 
                     <div className="social-icons" aria-label="Social links">
                         {socialLinks.map((s, idx) => (

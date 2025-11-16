@@ -645,7 +645,7 @@ export default function App() {
 
                 <div className="resume-actions">
                     <a
-                        href="/Srujan_Yamali__Software_Resume_Sept_2025.pdf"
+                        href="/SrujanYamaliResume.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="resume-btn"
@@ -654,7 +654,7 @@ export default function App() {
                         <span>View</span>
                     </a>
                     <a
-                        href="/Srujan_Yamali__Software_Resume_Sept_2025.pdf"
+                        href="/SrujanYamaliResume.pdf"
                         download
                         className="resume-btn"
                     >

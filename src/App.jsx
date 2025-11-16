@@ -61,6 +61,7 @@ const highlightLinks = [
     { label: '/resume',       href: '#resume'       },
     { label: '/projects',     href: '#projects'     },
     { label: '/papers', href: '#papers' },
+    { label: '/stack', href: '#stack' }
 ]
 
 const socialLinks = [
@@ -401,144 +402,344 @@ function ResumeTimeline() {
     )
 }
 
-/* ────────────────────────────────────────────────────────────────────────── */
-/* Projects (no external UI libs)                                            */
-/* ────────────────────────────────────────────────────────────────────────── */
+
 function ProjectsSection() {
     return (
-        <section id="projects" className="section">
+        <section id="projects" className="section projects-terminal-section">
             <header className="resume-header">
                 <h2 className="resume-title">Projects</h2>
-                <p className="resume-sub">Selected builds from research and engineering</p>
+                <p className="resume-sub">
+                    Run logs from tools I’ve actually built and shipped
+                </p>
                 <div className="resume-divider" />
             </header>
 
-            {/* Responsive grid using plain CSS grid via inline styles */}
-            <div
-                style={{
-                    display: 'grid',
-                    gap: 18,
-                    gridTemplateColumns: 'repeat(12, 1fr)',
-                }}
-            >
-                {projectsData.map((p, idx) => (
-                    <div key={idx} style={{ gridColumn: 'span 6' }}>
-                        <Card>
-                            <CardHeader>
-                                <CardTitle className="text-xl">{p.title}</CardTitle>
-                                <CardDescription>{p.name}</CardDescription>
-                            </CardHeader>
+            <div className="projects-terminal">
+                {projectsData.map((p, idx) => {
+                    // generate a fake CLI-ish command from the project name
+                    const slug = p.name
+                        .toLowerCase()
+                        .replace(/\s+/g, '_')
+                        .replace(/[^a-z0-9_]/g, '')
 
-                            <CardContent>
-                                <p style={{ color: 'var(--muted)', margin: 0 }}>{p.description}</p>
+                    const isResearchy =
+                        p.stack.includes("OpenCV") ||
+                        p.stack.includes("NumPy") ||
+                        p.stack.includes("Pandas") ||
+                        p.stack.includes("ruptures")
 
-                                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                                    {p.stack.map((s, i) => <Badge key={i}>{s}</Badge>)}
+                    return (
+                        <article key={idx} className="proj-session">
+                            {/* Session header bar */}
+                            <div className="proj-session-bar">
+                                <div className="proj-session-dots" aria-hidden="true">
+                                    <span className="proj-dot dot-red" />
+                                    <span className="proj-dot dot-amber" />
+                                    <span className="proj-dot dot-green" />
+                                </div>
+                                <span className="proj-session-label">
+                  session-{idx + 1 < 10 ? `0${idx + 1}` : idx + 1}
+                                    {isResearchy ? " · research" : " · engineering"}
+                </span>
+                            </div>
+
+                            {/* Terminal body */}
+                            <div className="proj-terminal-body">
+                                <div className="proj-line">
+                                    <span className="proj-prompt">$</span>
+                                    <span className="proj-command">
+                    run {slug}
+                                        {isResearchy ? " --analyze" : " --deploy"}
+                  </span>
                                 </div>
 
-                                <div>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontWeight: 700, fontSize: '.9rem', marginBottom: 4 }}>
-                                        <span>Next Up</span>
+                                <div className="proj-line proj-line-meta">
+                                    <span className="proj-meta-key">[title]</span>
+                                    <span className="proj-meta-value">{p.title}</span>
+                                </div>
+
+                                <div className="proj-line proj-line-meta">
+                                    <span className="proj-meta-key">[alias]</span>
+                                    <span className="proj-meta-value">{p.name}</span>
+                                </div>
+
+                                <div className="proj-line proj-line-meta">
+                                    <span className="proj-meta-key">[summary]</span>
+                                    <span className="proj-meta-value">{p.description}</span>
+                                </div>
+
+                                {/* Stack block */}
+                                <div className="proj-block">
+                                    <div className="proj-block-header">
+                                        <span className="proj-block-tag">[stack]</span>
+                                        <span className="proj-block-sub">
+                      {isResearchy ? "analysis · tooling" : "infra · product"}
+                    </span>
                                     </div>
-                                    <ul style={{ margin: 0, paddingLeft: '1.05rem', color: 'var(--muted)' }}>
-                                        {p.next.map((t, i) => <li key={i} style={{ margin: '.25rem 0' }}>{t}</li>)}
-                                    </ul>
+                                    <div className="proj-stack-row">
+                                        {p.stack.map((tech) => (
+                                            <span key={tech} className="proj-chip">
+                        {tech}
+                      </span>
+                                        ))}
+                                    </div>
                                 </div>
-                            </CardContent>
 
-                            <CardFooter>
-                                {p.links.map((l, i) => (
-                                    <a
-                                        key={i}
-                                        href={l.href}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        style={{
-                                            textDecoration: 'none',
-                                            background: '#ffffff',
-                                            color: '#0f172a',
-                                            border: '1px solid #e5e7eb',
-                                            padding: '.55rem .85rem',
-                                            borderRadius: 10,
-                                            fontWeight: 600,
-                                            fontSize: '.92rem',
-                                            display: 'inline-flex',
-                                            alignItems: 'center',
-                                            gap: 8,
-                                        }}
-                                    >
-                                        {l.icon}{l.label}
-                                    </a>
-                                ))}
-                            </CardFooter>
-                        </Card>
-                    </div>
-                ))}
+                                {/* Next up block */}
+                                {p.next?.length ? (
+                                    <div className="proj-block">
+                                        <div className="proj-block-header">
+                                            <span className="proj-block-tag">[next]</span>
+                                            <span className="proj-block-sub">planned extensions</span>
+                                        </div>
+                                        <ul className="proj-next-list">
+                                            {p.next.map((item, i) => (
+                                                <li key={i}>{item}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ) : null}
+
+                                {/* Links block */}
+                                {p.links?.length ? (
+                                    <div className="proj-block proj-links-block">
+                                        <div className="proj-block-header">
+                                            <span className="proj-block-tag">[links]</span>
+                                            <span className="proj-block-sub">source · artifact</span>
+                                        </div>
+                                        <div className="proj-links-row">
+                                            {p.links.map((l, i) => (
+                                                <a
+                                                    key={i}
+                                                    href={l.href}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="proj-link-chip"
+                                                >
+                                                    {l.icon}
+                                                    <span>{l.label}</span>
+                                                </a>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ) : null}
+
+                                {/* Status line */}
+                                <div className="proj-line proj-line-status">
+                                    <span className="proj-status-dot" />
+                                    <span className="proj-status-text">
+                    exit code 0 · {isResearchy ? "validated on real data" : "ready for users"}
+                  </span>
+                                </div>
+                            </div>
+                        </article>
+                    )
+                })}
             </div>
-
-            {/* Simple responsive tweak without extra CSS */}
-            <style>{`
-        @media (max-width: 900px){
-          #projects .section-grid-item { grid-column: span 12 !important; }
-        }
-      `}</style>
         </section>
     )
 }
+
 
 /* ────────────────────────────────────────────────────────────────────────── */
 /* Publications & Honors sections                                            */
 /* ────────────────────────────────────────────────────────────────────────── */
 function PapersSection() {
     return (
-        <section id="papers" className="section">
+        <section id="papers" className="section dossier-section">
             <header className="resume-header">
                 <h2 className="resume-title">Publications & Conferences</h2>
-                <p className="resume-sub">Selected abstracts, posters, and talks</p>
+                <p className="resume-sub">Filed research dossiers</p>
                 <div className="resume-divider" />
             </header>
 
-            <div className="papers-grid">
-                {papersData.map((p, i) => (
-                    <article key={i} className="paper-card">
-                        <div className="paper-main">
-                            <div className="paper-icon-wrapper" aria-hidden="true">
-                                <BookOpen className="paper-icon" />
+            <div className="dossier-grid">
+                {papersData.map((p, idx) => {
+                    const shortYear = String(p.year).slice(-2)
+                    const docNumber = `${shortYear}${(idx + 1).toString().padStart(2, "0")}`
+
+                    const lowerTitle = p.title.toLowerCase()
+                    let field = "Computational Biology"
+                    if (lowerTitle.includes("drosophila")) field = "Behavioral Genetics"
+                    if (lowerTitle.includes("recombination") || lowerTitle.includes("staphylococcus"))
+                        field = "Genomics / Microbiology"
+
+                    const level = idx === 0 ? "BLACKSITE ACCESS" : "CONFERENCE BRIEF"
+
+                    return (
+                        <article key={idx} className="dossier-card">
+                            {/* Top strip */}
+                            <header className="dossier-header">
+                                <div className="dossier-header-left">
+                                    <span className="dossier-doc-id">DOC-{docNumber}</span>
+                                    <span className="dossier-doc-label">CLASSIFIED RESEARCH DOSSIER</span>
+                                </div>
+                                <div className="dossier-header-right">
+                                    <span className="dossier-field">{field}</span>
+                                    <span className="dossier-level">{level}</span>
+                                </div>
+                            </header>
+
+                            <div className="dossier-rule" aria-hidden="true" />
+
+                            {/* Title block */}
+                            <div className="dossier-title-block">
+                                <h3 className="dossier-title">{p.title}</h3>
+                                <div className="dossier-year-stamp">
+                                    <span className="dossier-year">{p.year}</span>
+                                </div>
                             </div>
 
-                            <div className="paper-content-main">
-                                <div className="paper-top-row">
-                                    <h3 className="paper-title">{p.title}</h3>
-                                    <span className="paper-date-badge">{p.year}</span>
+                            {/* Authors / venue */}
+                            <div className="dossier-meta">
+                                <div className="dossier-meta-row">
+                                    <span className="dossier-meta-label">Authors</span>
+                                    <span className="dossier-meta-value">{p.authors}</span>
                                 </div>
+                                <div className="dossier-meta-row">
+                                    <span className="dossier-meta-label">Venue</span>
+                                    <span className="dossier-meta-value">{p.venue}</span>
+                                </div>
+                            </div>
 
-                                <p className="paper-authors">{p.authors}</p>
-                                <p className="paper-venue">{p.venue}</p>
+                            {/* Fake synopsis + redacted strip */}
+                            <div className="dossier-body">
+                                <div className="dossier-section-label">Synopsis</div>
+                                <p className="dossier-synopsis">
+                                    High-level summary of experimental design, results, and implications
+                                    filed under this entry. Detailed figures, statistics, and extended
+                                    methods are archived in the primary record.
+                                </p>
 
-                                {p.links?.length ? (
-                                    <div className="paper-links">
-                                        {p.links.map((l, j) => (
+                                <div className="dossier-redacted-block" aria-hidden="true">
+                                    <span className="dossier-redacted-label">REDACTED UNTIL FULL PUBLICATION</span>
+                                    <div className="dossier-redacted-bar" />
+                                </div>
+                            </div>
+
+                            {/* Links */}
+                            {p.links?.length ? (
+                                <footer className="dossier-footer">
+                                    <div className="dossier-section-label">Access</div>
+                                    <div className="dossier-links-row">
+                                        {p.links.map((l, i) => (
                                             <a
-                                                key={j}
+                                                key={i}
                                                 href={l.href}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="paper-link-btn"
+                                                className="dossier-link-btn"
                                             >
-                                                <ExternalLink size={16} />
+                                                <ExternalLink size={14} />
                                                 <span>{l.label}</span>
                                             </a>
                                         ))}
                                     </div>
-                                ) : null}
+                                </footer>
+                            ) : null}
+                        </article>
+                    )
+                })}
+            </div>
+        </section>
+    )
+}
+
+
+// === IDEA 1: METRO MAP STACK SECTION ===
+
+function StackSection() {
+    const lines = [
+        {
+            name: "Languages & Core",
+            color: "#22d3ee",
+            note: "day-to-day programming languages",
+            tools: ["Python", "JavaScript", "C/C++", "Rust", "Java", "SQL", "HTML/CSS"],
+        },
+        {
+            name: "Web & Frameworks",
+            color: "#a855f7",
+            note: "full-stack and web app frameworks",
+            tools: ["Node.js", "React", "Flask", "Django", "Tailwind CSS"],
+        },
+        {
+            name: "Cloud & Infra",
+            color: "#34d399",
+            note: "deploying, scaling, and operating services",
+            tools: [
+                "AWS (S3, EC2, RDS)",
+                "GCP",
+                "Azure",
+                "Linux",
+                "Docker",
+                "Kubernetes",
+                "Git",
+                "REST API",
+            ],
+        },
+        {
+            name: "Data & Storage",
+            color: "#f97316",
+            note: "databases, querying, and analytics",
+            tools: ["MySQL", "PostgreSQL", "SQLAlchemy", "NumPy", "Pandas"],
+        },
+        {
+            name: "AI / ML",
+            color: "#e11d48",
+            note: "modeling, vision, and LLM tooling",
+            tools: ["PyTorch", "TensorFlow", "Scikit-Learn", "OpenCV", "LangChain", "PineconeDB"],
+        },
+    ]
+
+    return (
+        <section id="stack" className="section stack-metro-section">
+            <header className="resume-header">
+                <h2 className="resume-title">Tech Stack</h2>
+                <p className="resume-sub">Mapped like a subway of what I actually use</p>
+                <div className="resume-divider" />
+            </header>
+
+            <div className="stack-metro">
+                {lines.map((line, idx) => (
+                    <div className="stack-line" key={line.name}>
+                        <div className="stack-line-label">
+                            <div className="stack-line-dot" style={{ backgroundColor: line.color }} />
+                            <div>
+                                <div className="stack-line-name">{line.name}</div>
+                                <div className="stack-line-note">{line.note}</div>
                             </div>
                         </div>
-                    </article>
+
+                        <div className="stack-line-track">
+                            <div
+                                className="stack-line-rail"
+                                style={{ background: `${line.color}55` }}
+                                aria-hidden="true"
+                            />
+                            <div className="stack-line-stations">
+                                {line.tools.map((tool) => (
+                                    <span
+                                        key={tool}
+                                        className="stack-station"
+                                        style={{
+                                            borderColor: `${line.color}aa`,
+                                            boxShadow: `0 4px 12px ${line.color}55`,
+                                        }}
+                                    >
+                    <span className="stack-station-bullet" style={{ backgroundColor: line.color }} />
+                                        {tool}
+                  </span>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
                 ))}
             </div>
         </section>
     )
 }
+
+
 
 /* ────────────────────────────────────────────────────────────────────────── */
 /* App                                                                        */
@@ -663,7 +864,7 @@ export default function App() {
                     </a>
                 </div>
 
-                <ResumeTimeline />
+            <ResumeTimeline />
             </section>
 
             {/* PROJECTS */}
@@ -671,6 +872,9 @@ export default function App() {
 
             {/* PUBLICATIONS */}
             <PapersSection />
+
+            {/* TECH STACK */}
+            <StackSection />
 
         </>
     )

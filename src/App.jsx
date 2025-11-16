@@ -106,39 +106,6 @@ const projectsData = [
             "Bayesian segment merging + QC report",
         ],
     },
-    {
-        name: "DrosophilaVialTracker",
-        title: "Vial Tracking App for D. melanogaster",
-        description:
-            "Desktop GUI to log vial color/genotype/temperature, auto-calc flip & virgin-collection dates, batch-add rows, update/remove entries, and persist to JSON.",
-        stack: ["Python", "PyQt6", "JSON"],
-        links: [
-            { label: "GitHub", href: "https://github.com/Srujyama/DrosophilaVialTracker", icon: <Github size={16} /> },
-        ],
-        next: [
-            "CSV/Excel import-export + filtering",
-            "Editable column for notes & vial status",
-            "Configurable day offsets (flip/virgin collection)",
-            "Notifications (email/desktop) for upcoming flips",
-            "Optional SQLite backend for multi-user lab PCs"
-        ]
-    },
-    {
-        name: "PDBAtomDistanceTool",
-        title: "Swing + BioJava PDB Renderer & Atom Distance Tool",
-        description:
-            "Java desktop app using BioJava + Jmol to load and render PDB files. Provides interactive visualization, spin toggling, and utilities for measuring atomic distances.",
-        stack: ["Java", "Swing", "BioJava", "Jmol"],
-        links: [
-            { label: "GitHub", href: "https://github.com/Srujyama/PDBAtomDistanceTool", icon: <Github size={16} /> },
-        ],
-        next: [
-            "Add atom/chain distance measurement interface",
-            "Support multiple PDB file overlays & alignments",
-            "Export rendered structures to PNG/SVG",
-            "Configurable visualization styles (cartoon, sticks)",
-        ]
-    },
 ]
 
 /* ────────────────────────────────────────────────────────────────────────── */
@@ -647,7 +614,6 @@ function PapersSection() {
 
 
 // === IDEA 1: METRO MAP STACK SECTION ===
-
 function StackSection() {
     const lines = [
         {
@@ -699,8 +665,9 @@ function StackSection() {
                 <div className="resume-divider" />
             </header>
 
+            {/* Metro map overview */}
             <div className="stack-metro">
-                {lines.map((line, idx) => (
+                {lines.map((line) => (
                     <div className="stack-line" key={line.name}>
                         <div className="stack-line-label">
                             <div className="stack-line-dot" style={{ backgroundColor: line.color }} />
@@ -726,14 +693,59 @@ function StackSection() {
                                             boxShadow: `0 4px 12px ${line.color}55`,
                                         }}
                                     >
-                    <span className="stack-station-bullet" style={{ backgroundColor: line.color }} />
+                      <span
+                          className="stack-station-bullet"
+                          style={{ backgroundColor: line.color }}
+                      />
                                         {tool}
-                  </span>
+                    </span>
                                 ))}
                             </div>
                         </div>
                     </div>
                 ))}
+            </div>
+
+            {/* Animated pipeline: how the stack actually flows */}
+            <div className="stack-flow">
+                <div className="stack-flow-header">
+                    <span className="stack-flow-title">How it all runs</span>
+                    <span className="stack-flow-sub">
+            requests flowing from UI → APIs → data → models → cloud
+          </span>
+                </div>
+
+                <div className="stack-flow-diagram">
+                    <div className="stack-flow-node node-client">
+                        <div className="stack-flow-label">Client</div>
+                        <div className="stack-flow-tools">React · JS · HTML/CSS</div>
+                    </div>
+
+                    <div className="stack-flow-node node-api">
+                        <div className="stack-flow-label">API / Services</div>
+                        <div className="stack-flow-tools">Node.js · Flask · Django</div>
+                    </div>
+
+                    <div className="stack-flow-node node-data">
+                        <div className="stack-flow-label">Data Layer</div>
+                        <div className="stack-flow-tools">PostgreSQL · MySQL · Pandas</div>
+                    </div>
+
+                    <div className="stack-flow-node node-ml">
+                        <div className="stack-flow-label">Models</div>
+                        <div className="stack-flow-tools">PyTorch · TensorFlow · OpenCV</div>
+                    </div>
+
+                    <div className="stack-flow-node node-cloud">
+                        <div className="stack-flow-label">Cloud / Infra</div>
+                        <div className="stack-flow-tools">AWS · GCP · Docker · K8s</div>
+                    </div>
+
+                    {/* moving "packets" */}
+                    <div className="stack-flow-packet packet-1" />
+                    <div className="stack-flow-packet packet-2" />
+                    <div className="stack-flow-packet packet-3" />
+                </div>
             </div>
         </section>
     )
@@ -870,11 +882,12 @@ export default function App() {
             {/* PROJECTS */}
             <ProjectsSection />
 
-            {/* PUBLICATIONS */}
-            <PapersSection />
 
             {/* TECH STACK */}
             <StackSection />
+
+            {/* PUBLICATIONS */}
+            <PapersSection />
 
         </>
     )

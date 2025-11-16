@@ -623,6 +623,191 @@ body {
 }
 
 /* ========================================================================== */
+/* 12b) STACK – PIPELINE ANIMATION                                            */
+/* ========================================================================== */
+
+.stack-flow {
+  margin-top: 26px;
+  padding: 14px 16px 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  background:
+          radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.18), transparent 55%),
+          radial-gradient(circle at 100% 100%, rgba(236, 72, 153, 0.18), transparent 55%),
+          rgba(15, 23, 42, 0.96);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.85);
+}
+
+.stack-flow-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.stack-flow-title {
+  font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: rgba(226, 232, 240, 0.95);
+}
+
+.stack-flow-sub {
+  font-size: 0.8rem;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+/* Main horizontal pipeline */
+.stack-flow-diagram {
+  position: relative;
+  margin-top: 6px;
+  padding: 24px 10px 10px;
+}
+
+/* The "wire" */
+.stack-flow-diagram::before {
+  content: "";
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  top: 50%;
+  height: 2px;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background:
+          linear-gradient(
+                  90deg,
+                  rgba(56, 189, 248, 0.6),
+                  rgba(129, 140, 248, 0.7),
+                  rgba(236, 72, 153, 0.7),
+                  rgba(52, 211, 153, 0.7)
+          );
+  box-shadow:
+          0 0 18px rgba(56, 189, 248, 0.6),
+          0 0 28px rgba(236, 72, 153, 0.5);
+  opacity: 0.85;
+}
+
+/* Nodes on the wire */
+.stack-flow-node {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+
+  padding: 8px 12px;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.98);
+  border: 1px solid rgba(148, 163, 184, 0.8);
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.9);
+  min-width: 120px;
+}
+
+/* Place each node along the pipeline */
+.node-client  { position: absolute; left: 4%;  top: 16%; }
+.node-api     { position: absolute; left: 24%; top: 16%; }
+.node-data    { position: absolute; left: 44%; top: 16%; }
+.node-ml      { position: absolute; left: 64%; top: 16%; }
+.node-cloud   { position: absolute; left: 84%; top: 16%; }
+
+.stack-flow-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: rgba(248, 250, 252, 0.98);
+}
+
+.stack-flow-tools {
+  font-size: 0.76rem;
+  color: rgba(156, 163, 175, 0.96);
+}
+
+/* Moving "packets" along the wire */
+.stack-flow-packet {
+  position: absolute;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 30% 30%, #f9fafb, #22c55e);
+  box-shadow:
+          0 0 10px rgba(34, 197, 94, 0.8),
+          0 0 18px rgba(34, 197, 94, 0.6);
+  opacity: 0.95;
+  animation: stackPacketTravel 5.5s linear infinite;
+}
+
+.packet-1 { animation-delay: 0s; }
+.packet-2 { animation-delay: 1.4s; }
+.packet-3 { animation-delay: 2.8s; }
+
+@keyframes stackPacketTravel {
+  0%   { left: 4%;  }
+  20%  { left: 24%; }
+  40%  { left: 44%; }
+  60%  { left: 64%; }
+  80%  { left: 84%; }
+  100% { left: 96%; }
+}
+
+/* Responsive: collapse into stacked layout */
+@media (max-width: 800px) {
+  .stack-flow-diagram {
+    padding-top: 16px;
+    padding-bottom: 4px;
+  }
+
+  .stack-flow-diagram::before {
+    left: 50%;
+    right: auto;
+    top: 12%;
+    bottom: 8%;
+    width: 2px;
+    height: auto;
+    transform: translateX(-50%);
+    background:
+            linear-gradient(
+                    180deg,
+                    rgba(56, 189, 248, 0.6),
+                    rgba(129, 140, 248, 0.7),
+                    rgba(236, 72, 153, 0.7),
+                    rgba(52, 211, 153, 0.7)
+            );
+  }
+
+  .stack-flow-node {
+    min-width: 0;
+    width: 74%;
+  }
+
+  .node-client { left: 50%; top: 10%; transform: translate(-50%, 0); }
+  .node-api    { left: 50%; top: 28%; transform: translate(-50%, 0); }
+  .node-data   { left: 50%; top: 46%; transform: translate(-50%, 0); }
+  .node-ml     { left: 50%; top: 64%; transform: translate(-50%, 0); }
+  .node-cloud  { left: 50%; top: 82%; transform: translate(-50%, 0); }
+
+  .stack-flow-packet {
+    left: 50%;
+    animation-name: stackPacketTravelVertical;
+  }
+}
+
+@keyframes stackPacketTravelVertical {
+  0%   { top: 10%; }
+  20%  { top: 28%; }
+  40%  { top: 46%; }
+  60%  { top: 64%; }
+  80%  { top: 82%; }
+  100% { top: 90%; }
+}
+
+
+/* ========================================================================== */
 /* 13) PROJECTS – TERMINAL RUN LOGS                                           */
 /* ========================================================================== */
 

@@ -2,7 +2,7 @@ import './App.css'
 import 'react-vertical-timeline-component/style.min.css'
 import { useEffect, useMemo, useState } from 'react'
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component'
-import { FileText, Download, Github, ExternalLink, Rocket, BookOpen, Trophy, Medal, ChevronDown } from "lucide-react"
+import { FileText, Download, Github, ExternalLink, BookOpen } from "lucide-react"
 
 /* ────────────────────────────────────────────────────────────────────────── */
 /* Minimal UI components (no libs)                                           */
@@ -61,7 +61,6 @@ const highlightLinks = [
     { label: '/resume',       href: '#resume'       },
     { label: '/projects',     href: '#projects'     },
     { label: '/papers', href: '#papers' },
-    { label: '/honors',       href: '#honors'       },
 ]
 
 const socialLinks = [
@@ -499,218 +498,42 @@ function PapersSection() {
                 <div className="resume-divider" />
             </header>
 
-            <div style={{ display:'grid', gap: 14 }}>
+            <div className="papers-grid">
                 {papersData.map((p, i) => (
-                    <Card key={i}>
-                        <CardHeader>
-                            <CardTitle className="text-xl" style={{ lineHeight: 1.35 }}>{p.title}</CardTitle>
-                            <CardDescription>{p.authors}</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <p style={{ margin: 0, color: 'var(--muted)' }}>
-                                {p.venue} · {p.year}
-                            </p>
-                        </CardContent>
-                        {p.links?.length ? (
-                            <CardFooter>
-                                {p.links.map((l, j) => (
-                                    <a
-                                        key={j}
-                                        href={l.href}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        style={{
-                                            textDecoration: 'none',
-                                            background: '#ffffff',
-                                            color: '#0f172a',
-                                            border: '1px solid #e5e7eb',
-                                            padding: '.5rem .8rem',
-                                            borderRadius: 10,
-                                            fontWeight: 600,
-                                            fontSize: '.9rem',
-                                            display: 'inline-flex',
-                                            alignItems: 'center',
-                                            gap: 8,
-                                        }}
-                                    >
-                                        <ExternalLink size={16} /> {l.label}
-                                    </a>
-                                ))}
-                            </CardFooter>
-                        ) : null}
-                    </Card>
-                ))}
-            </div>
-        </section>
-    )
-}
-
-function HonorsSection() {
-    const [expandedAward, setExpandedAward] = useState(null)
-
-    const awardsGrouped = [
-        {
-            id: 'presidential',
-            title: 'Presidential Volunteer Service Award - Gold',
-            org: 'United States Government',
-            date: 'May 2024',
-            description: 'Recognized for exceptional volunteer service contributions to the community.',
-            logo: '/prez_volunteer_awardlogo_april_09_flat_custom.jpg'
-        },
-        {
-            id: 'dvsf',
-            title: '1st Place in Behavior at Delaware Valley Science Fair',
-            org: 'Delaware Valley Science Fair',
-            date: 'Apr 2024',
-            description: 'First place in behavior category at the most competitive regional science fair.',
-            logo: '/DVSF.jpeg'
-        },
-        {
-            id: 'usabo',
-            title: 'USA Biology Olympiad Semi-Finalist',
-            org: 'Center for Excellence in Education',
-            date: 'Mar 2024',
-            description: 'The USA Biology Olympiad, or USABO, is a prestigious biology competition for high school students in the United States. Launched in 2002, USABO\'s mission is to recognize and empower up-and-coming life science students through rigorous biology exams and international networking opportunities. Qualified for the Semifinals round, placing amongst the top 10% of national test-takers.',
-            logo: '/USABO.jpg'
-        },
-        {
-            id: 'apscholar',
-            title: 'AP Scholar with Distinction',
-            org: 'College Board',
-            date: 'Jul 2023',
-            description: 'Granted to students who receive an average score of at least 3.5 on all AP Exams taken, and scores of 3 or higher on five or more of these exams.',
-            logo: '/ap_logo.png'
-        },
-        {
-            id: 'bpa',
-            title: 'BPA Awards',
-            org: 'Business Professionals of America',
-            date: '2023-2025',
-            description: 'Multiple state and national level achievements in business and technology competitions.',
-            logo: '/BPA.jpg',
-            hasExpand: true,
-            categories: [
-                {
-                    label: 'National',
-                    items: [
-                        'Eighth place in Information Technology Concepts (2023)',
-                        'Seventh place in Parliamentary Procedure Concepts (2023)',
-                        'Second place in Digital Communication (2023)',
-                        'Second place in Healthcare Administration Concepts (2024)'
-                    ]
-                },
-                {
-                    label: 'State',
-                    items: [
-                        'First place in Website Design (2023) - $1,500 scholarship',
-                        'Second place in Healthcare Administration (2023)',
-                        'First place in Healthcare Administration Concepts (2024)',
-                        'Second place in Website Design (2024)',
-                        'First place in Meeting and Event Planning Concepts (2025)',
-                        'Second place in Administrative Support Concepts (2025)',
-                        'Third place in Digital Communication & Design Concepts (2025)',
-                        'Third place in Project Management Concepts (2025)',
-                        'Third place in Website Design (2025)'
-                    ]
-                }
-            ]
-        },
-        {
-            id: 'tsa',
-            title: 'TSA Awards',
-            org: 'Technology Student Association',
-            date: '2023-2024',
-            description: 'State-level recognition in biotechnology, music production, and problem-solving competitions.',
-            logo: '/Technology_Student_Association_Emblem.svg.png',
-            hasExpand: true,
-            categories: [
-                {
-                    label: 'State',
-                    items: [
-                        'Second place in Biotechnology Design (2023, 2024)',
-                        'Third place in Music Production (2023, 2024)',
-                        'Third place in Extemporaneous Speech (2024)',
-                        'Third place in Technology Problem Solving (2023)'
-                    ]
-                }
-            ]
-        }
-    ]
-
-    const toggleAward = (id) => {
-        setExpandedAward(expandedAward === id ? null : id)
-    }
-
-    return (
-        <section id="honors" className="section">
-            <header className="resume-header">
-                <h2 className="resume-title">Awards & Honors</h2>
-                <p className="resume-sub">Recognitions and achievements</p>
-                <div className="resume-divider" />
-            </header>
-
-            <div className="awards-grid">
-                {awardsGrouped.map((award) => (
-                    <div key={award.id} className="award-card-new">
-                        <div
-                            className="award-main"
-                            onClick={() => award.hasExpand && toggleAward(award.id)}
-                            style={{ cursor: award.hasExpand ? 'pointer' : 'default' }}
-                        >
-                            <div className="award-icon-wrapper">
-                                <img
-                                    src={award.logo}
-                                    alt={`${award.org} logo`}
-                                    className="award-logo-img"
-                                />
+                    <article key={i} className="paper-card">
+                        <div className="paper-main">
+                            <div className="paper-icon-wrapper" aria-hidden="true">
+                                <BookOpen className="paper-icon" />
                             </div>
 
-                            <div className="award-content-main">
-                                <div className="award-top-row">
-                                    <h3 className="award-title-new">{award.title}</h3>
-                                    <span className="award-date-badge">{award.date}</span>
+                            <div className="paper-content-main">
+                                <div className="paper-top-row">
+                                    <h3 className="paper-title">{p.title}</h3>
+                                    <span className="paper-date-badge">{p.year}</span>
                                 </div>
-                                <p className="award-org-new">{award.org}</p>
-                                {award.description && (
-                                    <p className="award-description">{award.description}</p>
-                                )}
 
-                                {award.hasExpand && (
-                                    <button className="expand-btn" aria-label="Expand details">
-                                        <ChevronDown
-                                            size={20}
-                                            style={{
-                                                transform: expandedAward === award.id ? 'rotate(180deg)' : 'rotate(0deg)',
-                                                transition: 'transform 0.3s ease'
-                                            }}
-                                        />
-                                        <span>{expandedAward === award.id ? 'Show less' : 'Show details'}</span>
-                                    </button>
-                                )}
+                                <p className="paper-authors">{p.authors}</p>
+                                <p className="paper-venue">{p.venue}</p>
+
+                                {p.links?.length ? (
+                                    <div className="paper-links">
+                                        {p.links.map((l, j) => (
+                                            <a
+                                                key={j}
+                                                href={l.href}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="paper-link-btn"
+                                            >
+                                                <ExternalLink size={16} />
+                                                <span>{l.label}</span>
+                                            </a>
+                                        ))}
+                                    </div>
+                                ) : null}
                             </div>
                         </div>
-
-                        {award.hasExpand && (
-                            <div
-                                className="award-expand-content"
-                                style={{
-                                    maxHeight: expandedAward === award.id ? '1000px' : '0',
-                                    opacity: expandedAward === award.id ? 1 : 0,
-                                }}
-                            >
-                                {award.categories.map((cat, idx) => (
-                                    <div key={idx} className="award-category">
-                                        <h4 className="category-label">{cat.label}</h4>
-                                        <ul className="category-list">
-                                            {cat.items.map((item, i) => (
-                                                <li key={i}>{item}</li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                    </div>
+                    </article>
                 ))}
             </div>
         </section>
@@ -849,8 +672,6 @@ export default function App() {
             {/* PUBLICATIONS */}
             <PapersSection />
 
-            {/* HONORS */}
-            <HonorsSection />
         </>
     )
 }
